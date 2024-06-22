@@ -1,0 +1,32 @@
+name: CI Pipeline Nuxt Docs
+
+on:
+  push:
+    branches:
+      - masters
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js and Yarn
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          registry-url: 'https://registry.yarnpkg.com/'
+
+      - name: Install dependencies with Yarn
+        run: yarn install
+
+      - name: Build Nuxt.js app with Yarn
+        run: yarn build
+
+      - name: Run Cypress tests with Yarn
+        run: yarn test:e2e
